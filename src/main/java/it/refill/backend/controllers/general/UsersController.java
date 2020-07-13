@@ -35,13 +35,16 @@ public class UsersController {
         @ApiResponse(responseCode = "406", description = "The token is expired")
     })
     @GetMapping("/info")    
-    public ResponseEntity<User> getInfoUser(HttpServletRequest req){
+    public ResponseEntity<?> getInfoUser(HttpServletRequest req){
         
         Long id = (Long) req.getAttribute("user_id");
 
-        User response = userRepository.getOne(id);
-
-        return new ResponseEntity<User>(response, HttpStatus.ACCEPTED);
+        try{
+            User response = userRepository.getOne(id);
+            return new ResponseEntity<User>(response, HttpStatus.ACCEPTED);
+        }catch(Exception e){
+            return new ResponseEntity<String>("No User found", HttpStatus.INTERNAL_SERVER_ERROR);
+        }     
     }
 
 }

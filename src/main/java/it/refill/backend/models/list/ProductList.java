@@ -1,7 +1,6 @@
 package it.refill.backend.models.list;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
