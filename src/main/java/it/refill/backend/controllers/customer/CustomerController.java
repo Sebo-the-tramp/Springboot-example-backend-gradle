@@ -42,7 +42,7 @@ public class CustomerController {
     @PreAuthorize("hasRole('USER')")
     public ResponseEntity<UserAuth> getSingleCustomer(HttpServletRequest req) {
         
-        Long id = (Long) req.getAttribute("user_id");        
+        Long id = (Long) req.getAttribute("user_id");
 
         UserAuth prova = userRepository.getOne(id);
 

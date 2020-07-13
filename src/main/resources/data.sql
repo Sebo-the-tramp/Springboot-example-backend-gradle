@@ -8,7 +8,7 @@ INSERT INTO users_auth(user_id, password, username, enabled) VALUES (70, "$2a$10
 INSERT INTO user_roles(user_id, role_id) VALUES (69, 3);
 INSERT INTO user_roles(user_id, role_id) VALUES (70, 2);
 
-INSERT INTO suppliers(supplier_id, supplier_name, supplier_iva, supplier_lat, supplier_long) VALUES (70,"felicetti", "09382402934823", 23.23432, 23.12312);
+INSERT INTO suppliers(supplier_id, name, supplier_iva, supplier_lat, supplier_long) VALUES (70,"Felicetti", "09382402934823", 23.23432, 23.12312);
 
 INSERT INTO users(user_id, type, customer_id, supplier_id) VALUES (70, "supplier", NULL, 70);
 

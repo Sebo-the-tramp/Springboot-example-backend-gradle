@@ -54,7 +54,7 @@ public class ProductController {
         @PostMapping("")
         @PreAuthorize("hasRole('SUPPLIER')")
         public ResponseEntity<?> addProduct(@Valid @RequestBody ProductPost newProduct, HttpServletRequest req) {
-
+ 
                 // get the suppleier associated with the new product
                 Supplier supplier = supplierRepository.getOne((Long) req.getAttribute("user_id"));
 

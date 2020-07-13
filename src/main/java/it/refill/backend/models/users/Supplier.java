@@ -30,7 +30,7 @@ public class Supplier {
     @Column(name = "supplier_id")
     private Long id;
 
-    private String supplierName;
+    private String name;
     private String supplierIva;
     private String description;
     private Float supplierLat;
@@ -47,8 +47,8 @@ public class Supplier {
 
     public Supplier(){}
 
-    public Supplier(String supplierName, String supplierIva, Float supplierLat, Float supplierLong, User user, String description) {        
-        this.supplierName = supplierName;
+    public Supplier(String name, String supplierIva, Float supplierLat, Float supplierLong, User user, String description) {        
+        this.name = name;
         this.supplierIva = supplierIva;
         this.supplierLat = supplierLat;
         this.supplierLong = supplierLong;
@@ -65,12 +65,12 @@ public class Supplier {
         this.id = id;
     }
 
-    public String getSupplierName() {
-        return this.supplierName;
+    public String getName() {
+        return this.name;
     }
 
-    public void setSupplierName(String supplierName) {
-        this.supplierName = supplierName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSupplierIva() {

@@ -45,6 +45,12 @@ public class User {
     @JoinColumn(name = "customer_id", referencedColumnName = "customer_id")
     private Customer customer;
 
+    @Nullable
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    @JoinColumn(name = "admin_id", referencedColumnName = "admin_id")
+    private Admin admin;
+
     
     @ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(	name = "user_address", 
