@@ -4,13 +4,22 @@ INSERT INTO roles(name) VALUES('ROLE_ADMIN');
 
 INSERT INTO users_auth(user_id, password, username, enabled) VALUES (69, "$2a$10$qF9b/wYfMAhwgSL9eogRnum/G.EJ6YhwuZcTDogpPXrIwaAN4loby", "seb@dev.com", true);
 INSERT INTO users_auth(user_id, password, username, enabled) VALUES (70, "$2a$10$qF9b/wYfMAhwgSL9eogRnum/G.EJ6YhwuZcTDogpPXrIwaAN4loby", "supplier@test.com", true);
+INSERT INTO users_auth(user_id, password, username, enabled) VALUES (71, "$2a$10$qF9b/wYfMAhwgSL9eogRnum/G.EJ6YhwuZcTDogpPXrIwaAN4loby", "user@dev.com", true);
+INSERT INTO users_auth(user_id, password, username, enabled) VALUES (72, "$2a$10$qF9b/wYfMAhwgSL9eogRnum/G.EJ6YhwuZcTDogpPXrIwaAN4loby", "user2@dev.com", true);
 
 INSERT INTO user_roles(user_id, role_id) VALUES (69, 3);
 INSERT INTO user_roles(user_id, role_id) VALUES (70, 2);
+INSERT INTO user_roles(user_id, role_id) VALUES (71, 1);
+INSERT INTO user_roles(user_id, role_id) VALUES (72, 1);
 
 INSERT INTO suppliers(supplier_id, name, supplier_iva, supplier_lat, supplier_long) VALUES (70,"Felicetti", "09382402934823", 23.23432, 23.12312);
 
+INSERT INTO customers(customer_id, first_name, last_name, image_link, telephone, created_at, prefix) VALUES (71, "Sebastian", "Cavada", null, "3703115683", null, "+39");
+INSERT INTO customers(customer_id, first_name, last_name, image_link, telephone, created_at, prefix) VALUES (72, "Luca", "Taddeo", null, "12312312", null, "+39");
+
 INSERT INTO users(user_id, type, customer_id, supplier_id) VALUES (70, "supplier", NULL, 70);
+INSERT INTO users(user_id, type, customer_id, supplier_id) VALUES (71, "customer test", 71, NULL);
+INSERT INTO users(user_id, type, customer_id, supplier_id) VALUES (72, "customer test 2", 72, NULL);
 
 INSERT INTO nationalities (nationality_name, nationality_short) VALUES ("Italy", "IT");
 

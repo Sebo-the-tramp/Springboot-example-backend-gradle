@@ -45,6 +45,7 @@ import it.refill.backend.models.users.VerificationToken;
 import it.refill.backend.payload.request.LoginRequest;
 import it.refill.backend.payload.request.SignupRequest;
 import it.refill.backend.payload.response.JwtResponse;
+import it.refill.backend.repository.list.ProductListRepository;
 import it.refill.backend.repository.users.CustomerRepository;
 import it.refill.backend.repository.users.RoleRepository;
 import it.refill.backend.repository.users.UserAuthRepository;
@@ -86,7 +87,10 @@ public class AuthController {
     UserService service;
 
     @Autowired
-    ApplicationEventPublisher eventPublisher;
+    ProductListRepository productListRepository;
+
+    @Autowired
+    ApplicationEventPublisher eventPublisher;    
 
     @Operation(summary = "SignIn User", description = "Sign a user in returning some data about the login")
     @ApiResponses(value = {
@@ -147,6 +151,8 @@ public class AuthController {
         UserAuth authUser = new UserAuth(signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()));
         authUser.setRoles(roles);
         userAuthRepository.save(authUser);
+
+        logger.info(authUser.getId().toString());
         
         //send confirmation email
         service.confirmRegistration(authUser, request.getContextPath());
@@ -179,9 +185,15 @@ public class AuthController {
             return new ResponseEntity<String>("The token is already expired", HttpStatus.NOT_ACCEPTABLE);
         }
 
+        
+
         //if everything went good, the user is enabled
         user.setEnabled(true);
         service.deleteVerificationToken(verificationToken);
+
+        //adding a default list called cart only when the user has confirmed its identity in order to make less usage
+        productListRepository.addProductList("Cart", "The shopping cart", true, user.getId());
+
         // service.saveRegisteredUser(user);
         return new ResponseEntity<String>("Your account is now ready", HttpStatus.ACCEPTED);
     }

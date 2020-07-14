@@ -40,6 +40,8 @@ public class Customer {
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductList> productList;
 
+    public Customer(){};
+
     public Customer(String firstName, String lastName, String imageLink, String telephone, String prefix, Date createdAt) {        
         this.firstName = firstName;
         this.lastName = lastName;
@@ -48,7 +50,6 @@ public class Customer {
         this.prefix = prefix;        
         this.createdAt = createdAt;
     }
-
 
     public Long getId() {
         return this.id;
