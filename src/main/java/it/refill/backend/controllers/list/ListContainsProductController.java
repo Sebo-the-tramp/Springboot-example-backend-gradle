@@ -39,30 +39,36 @@ public class ListContainsProductController {
 
         Long customerId = (Long) req.getAttribute("user_id");
 
-        // if the product is already in the list just update it's value otherwise add it
-        // to the list
-        try {
-            Integer quantity = listContainsProductRepository.checkIfProductIsInList(payload.getProductId(),
-                    payload.getListId());
+        if (listContainsProductRepository.checkIfListIsOwnedByUser(customerId, payload.getListId())) {
 
-            // if the quantity of some products is positive update it otherwise remove the
-            // item from the list
-            if (quantity + payload.getQuantity() > 0) {
-                listContainsProductRepository.upadteProductList(payload.getListId(), payload.getProductId(), customerId,
-                        (quantity + payload.getQuantity()));
-            } else {
-                listContainsProductRepository.removeProductList(payload.getListId(), payload.getProductId(),
-                        customerId);
+            // if the product is already in the list just update it's value otherwise add it
+            // to the list
+            try {
+                Integer quantity = listContainsProductRepository.checkIfProductIsInList(payload.getProductId(),
+                        payload.getListId());
+
+                // if the quantity of some products is positive update it otherwise remove the
+                // item from the list
+                if (quantity + payload.getQuantity() > 0) {
+                    listContainsProductRepository.upadteProductList(payload.getListId(), payload.getProductId(),
+                            customerId, (quantity + payload.getQuantity()));
+                } else {
+                    listContainsProductRepository.removeProductList(payload.getListId(), payload.getProductId(),
+                            customerId);
+                }
+
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
+
+            } catch (Exception e) {
+                listContainsProductRepository.addProductList(payload.getListId(), payload.getProductId(), customerId,
+                        payload.getQuantity());
+
+                return new ResponseEntity<>(HttpStatus.ACCEPTED);
             }
 
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
-
-        } catch (Exception e) {
-            listContainsProductRepository.addProductList(payload.getListId(), payload.getProductId(), customerId,
-                    payload.getQuantity());
-
-            return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        }else{
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
-    }
 
+    }
 }

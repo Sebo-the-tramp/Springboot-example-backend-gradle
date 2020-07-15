@@ -29,4 +29,7 @@ public interface ListContainsProductRepository extends JpaRepository<ListContain
     @Query(value = "SELECT quantity FROM list_contains_products WHERE EXISTS (SELECT quantity FROM list_contains_products WHERE product_id = :product_id AND list_id = :list_id)", nativeQuery = true)
     Integer checkIfProductIsInList(@Param("product_id") Long productId, @Param("list_id") Long listId);
 
+    @Query(value = "SELECT * FROM list_contains_products INNER JOIN products_lists ON list_contains_products.list_id = products_lists.id WHERE list_id = :list_id AND customer_id = :customer_id LIMIT 1", nativeQuery = true)
+    Boolean checkIfListIsOwnedByUser(@Param("list_id") Long productId, @Param("customer_id") Long listId);
+
 }
