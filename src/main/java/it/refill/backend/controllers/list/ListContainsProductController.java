@@ -17,9 +17,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import it.refill.backend.payload.request.list.ProductList;
+import it.refill.backend.payload.request.list.ProductPayload;
 import it.refill.backend.payload.response.JwtResponse;
 import it.refill.backend.repository.list.ListContainsProductRepository;
+import it.refill.backend.repository.list.ListProductRepository;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -30,43 +31,42 @@ public class ListContainsProductController {
     @Autowired
     ListContainsProductRepository listContainsProductRepository;
 
+    @Autowired
+    ListProductRepository productListRepository;
+
     @Operation(summary = "Add to some list some product", description = "Given the id of the user, of the list and of the product and the quantity it will add it to the user's cart")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Succesfully added to a list", content = @Content(schema = @Schema(implementation = JwtResponse.class))),
-            @ApiResponse(responseCode = "500", description = "Internal server error") })
+            @ApiResponse(responseCode = "403", description = "Unauthorized") })
     @PostMapping("/")
-    public ResponseEntity<?> addProductToList(HttpServletRequest req, @RequestBody ProductList payload) {
+    public ResponseEntity<?> addProductToList(HttpServletRequest req, @RequestBody ProductPayload payload) {
 
         Long customerId = (Long) req.getAttribute("user_id");
 
-        if (listContainsProductRepository.checkIfListIsOwnedByUser(customerId, payload.getListId())) {
+        //only if the list is owned by the user proceed
+        if (productListRepository.checkIfListIsOwnedByUser(payload.getListId(), customerId) > 0) {
 
-            // if the product is already in the list just update it's value otherwise add it
-            // to the list
-            try {
-                Integer quantity = listContainsProductRepository.checkIfProductIsInList(payload.getProductId(),
-                        payload.getListId());
+            //if the product is in list
+            if(listContainsProductRepository.checkIfProductIsInList(payload.getProductId(), payload.getListId()) > 0 ){
+                //retrieving quantity from the database and update it
+                Integer quantity = listContainsProductRepository.getQuantityProduct(payload.getListId(), payload.getProductId());
 
-                // if the quantity of some products is positive update it otherwise remove the
-                // item from the list
-                if (quantity + payload.getQuantity() > 0) {
-                    listContainsProductRepository.upadteProductList(payload.getListId(), payload.getProductId(),
-                            customerId, (quantity + payload.getQuantity()));
-                } else {
-                    listContainsProductRepository.removeProductList(payload.getListId(), payload.getProductId(),
-                            customerId);
-                }
+                Integer newQuantity = quantity + payload.getQuantity();
 
-                return new ResponseEntity<>(HttpStatus.ACCEPTED);
+                //don't update if it is zero (double checker also in the dashboard)
+                if(newQuantity >= 0){
+                    listContainsProductRepository.upadteListProduct(payload.getListId(), payload.getProductId(), newQuantity);
+                }                
 
-            } catch (Exception e) {
-                listContainsProductRepository.addProductList(payload.getListId(), payload.getProductId(), customerId,
-                        payload.getQuantity());
+            }else{
+                if(payload.getQuantity() > 0){
+                    listContainsProductRepository.addListProduct(payload.getListId(), payload.getProductId(), payload.getQuantity());
+                }                
+            }                    
 
-                return new ResponseEntity<>(HttpStatus.ACCEPTED);
-            }
+            return new ResponseEntity<>(HttpStatus.ACCEPTED);
 
-        }else{
+        } else {
             return new ResponseEntity<>(HttpStatus.FORBIDDEN);
         }
 

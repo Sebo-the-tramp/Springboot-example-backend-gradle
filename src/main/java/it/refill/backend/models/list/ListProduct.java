@@ -15,9 +15,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import it.refill.backend.models.users.Customer;
 
-@Entity(name="ProductList")
-@Table(name="products_lists")
-public class ProductList {
+@Entity(name="ListProduct")
+@Table(name="list_products")
+public class ListProduct {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,11 +36,10 @@ public class ProductList {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-
-    public ProductList() {
+    public ListProduct() {
     }
 
-    public ProductList(Long id, String listName, String listDescription, BigDecimal totalPrice, boolean isCart, Customer customer) {
+    public ListProduct(Long id, String listName, String listDescription, BigDecimal totalPrice, boolean isCart, Customer customer) {
         this.id = id;
         this.listName = listName;
         this.listDescription = listDescription;
@@ -101,32 +100,32 @@ public class ProductList {
         this.customer = customer;
     }
 
-    public ProductList id(Long id) {
+    public ListProduct id(Long id) {
         this.id = id;
         return this;
     }
 
-    public ProductList listName(String listName) {
+    public ListProduct listName(String listName) {
         this.listName = listName;
         return this;
     }
 
-    public ProductList listDescription(String listDescription) {
+    public ListProduct listDescription(String listDescription) {
         this.listDescription = listDescription;
         return this;
     }
 
-    public ProductList totalPrice(BigDecimal totalPrice) {
+    public ListProduct totalPrice(BigDecimal totalPrice) {
         this.totalPrice = totalPrice;
         return this;
     }
 
-    public ProductList isCart(boolean isCart) {
+    public ListProduct isCart(boolean isCart) {
         this.isCart = isCart;
         return this;
     }
 
-    public ProductList customer(Customer customer) {
+    public ListProduct customer(Customer customer) {
         this.customer = customer;
         return this;
     }

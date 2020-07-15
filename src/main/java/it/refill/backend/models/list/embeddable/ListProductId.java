@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 
-public class ProductListId implements Serializable {
+public class ListProductId implements Serializable {
     
     /**
      * class made in order to provide a composite Id for the list     
@@ -21,10 +21,10 @@ public class ProductListId implements Serializable {
     private Long productId;
 
 
-    public ProductListId() {
+    public ListProductId() {
     }
 
-    public ProductListId(Long listId, Long productId) {
+    public ListProductId(Long listId, Long productId) {
         this.listId = listId;
         this.productId = productId;
     }
@@ -45,12 +45,12 @@ public class ProductListId implements Serializable {
         this.productId = productId;
     }
 
-    public ProductListId listId(Long listId) {
+    public ListProductId listId(Long listId) {
         this.listId = listId;
         return this;
     }
 
-    public ProductListId productId(Long productId) {
+    public ListProductId productId(Long productId) {
         this.productId = productId;
         return this;
     }

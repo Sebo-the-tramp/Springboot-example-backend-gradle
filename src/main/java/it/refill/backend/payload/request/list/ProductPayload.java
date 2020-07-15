@@ -2,7 +2,7 @@ package it.refill.backend.payload.request.list;
 
 import javax.validation.constraints.NotBlank;
 
-public class ProductList {
+public class ProductPayload {
     @NotBlank
     private Long listId;
 
@@ -13,10 +13,10 @@ public class ProductList {
     private Integer quantity;
 
 
-    public ProductList() {
+    public ProductPayload() {
     }
 
-    public ProductList(Long listId, Long productId, Integer quantity) {
+    public ProductPayload(Long listId, Long productId, Integer quantity) {
         this.listId = listId;
         this.productId = productId;
         this.quantity = quantity;
@@ -46,17 +46,17 @@ public class ProductList {
         this.quantity = quantity;
     }
 
-    public ProductList listId(Long listId) {
+    public ProductPayload listId(Long listId) {
         this.listId = listId;
         return this;
     }
 
-    public ProductList productId(Long productId) {
+    public ProductPayload productId(Long productId) {
         this.productId = productId;
         return this;
     }
 
-    public ProductList quantity(Integer quantity) {
+    public ProductPayload quantity(Integer quantity) {
         this.quantity = quantity;
         return this;
     }

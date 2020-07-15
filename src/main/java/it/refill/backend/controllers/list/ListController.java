@@ -21,10 +21,10 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import it.refill.backend.models.list.ProductList;
+import it.refill.backend.models.list.ListProduct;
 import it.refill.backend.payload.request.list.ListPayload;
 import it.refill.backend.payload.response.JwtResponse;
-import it.refill.backend.repository.list.ProductListRepository;
+import it.refill.backend.repository.list.ListProductRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -35,7 +35,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class ListController {
 
     @Autowired
-    ProductListRepository productListRepository;
+    ListProductRepository productListRepository;
 
     @Operation(summary = "Create new list to User", description = "Given the Id of a user and a name of the list, create one")
     @ApiResponses(value = {
@@ -47,7 +47,7 @@ public class ListController {
         try {
             Long id = (Long) req.getAttribute("user_id");
 
-            productListRepository.addProductList(payloadList.getName(), payloadList.getDescription(),
+            productListRepository.addListProduct(payloadList.getName(), payloadList.getDescription(),
                     payloadList.getIsCart(), id);
 
             return new ResponseEntity<>(HttpStatus.ACCEPTED);
@@ -80,13 +80,13 @@ public class ListController {
             @ApiResponse(responseCode = "200", description = "Succesfully retrieved lists", content = @Content(schema = @Schema(implementation = JwtResponse.class))),
             @ApiResponse(responseCode = "500", description = "Internal server error") })
     @GetMapping(value="/")
-    public ResponseEntity<List<ProductList>> getAllListUser(HttpServletRequest req) {                           
+    public ResponseEntity<List<ListProduct>> getAllListUser(HttpServletRequest req) {                           
 
         Long id = (Long) req.getAttribute("user_id");            
 
-        List<ProductList> result = productListRepository.getAllListsUser(id);
+        List<ListProduct> result = productListRepository.getAllListsUser(id);
 
-        return new ResponseEntity<List<ProductList>>(result, HttpStatus.ACCEPTED);
+        return new ResponseEntity<List<ListProduct>>(result, HttpStatus.ACCEPTED);
     }    
 
 }

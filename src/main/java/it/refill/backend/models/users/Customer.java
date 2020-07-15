@@ -15,20 +15,20 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import it.refill.backend.models.list.ProductList;
-
+import it.refill.backend.models.list.ListProduct;
+import it.refill.backend.models.order.Order;
 
 @Entity
 @Table(name = "customers")
 public class Customer {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="customer_id")
-    private Long id; 
-      
+    @Column(name = "customer_id")
+    private Long id;
+
     private String firstName;
     private String lastName;
-	private String imageLink;
+    private String imageLink;
     private String telephone;
     private Date createdAt;
     private String prefix;
@@ -38,7 +38,10 @@ public class Customer {
     private User user;
 
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductList> productList;
+    private List<ListProduct> productList;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Order> orders;
 
     public Customer(){};
 

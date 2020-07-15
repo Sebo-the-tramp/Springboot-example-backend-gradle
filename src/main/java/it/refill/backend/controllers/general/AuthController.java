@@ -45,7 +45,7 @@ import it.refill.backend.models.users.VerificationToken;
 import it.refill.backend.payload.request.LoginRequest;
 import it.refill.backend.payload.request.SignupRequest;
 import it.refill.backend.payload.response.JwtResponse;
-import it.refill.backend.repository.list.ProductListRepository;
+import it.refill.backend.repository.list.ListProductRepository;
 import it.refill.backend.repository.users.CustomerRepository;
 import it.refill.backend.repository.users.RoleRepository;
 import it.refill.backend.repository.users.UserAuthRepository;
@@ -87,7 +87,7 @@ public class AuthController {
     UserService service;
 
     @Autowired
-    ProductListRepository productListRepository;
+    ListProductRepository productListRepository;
 
     @Autowired
     ApplicationEventPublisher eventPublisher;    
@@ -192,7 +192,7 @@ public class AuthController {
         service.deleteVerificationToken(verificationToken);
 
         //adding a default list called cart only when the user has confirmed its identity in order to make less usage
-        productListRepository.addProductList("Cart", "The shopping cart", true, user.getId());
+        productListRepository.addListProduct("Cart", "The shopping cart", true, user.getId());
 
         // service.saveRegisteredUser(user);
         return new ResponseEntity<String>("Your account is now ready", HttpStatus.ACCEPTED);

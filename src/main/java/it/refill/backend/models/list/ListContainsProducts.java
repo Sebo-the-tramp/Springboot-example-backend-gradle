@@ -7,20 +7,20 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.Table;
 
-import it.refill.backend.models.list.embeddable.ProductListId;
+import it.refill.backend.models.list.embeddable.ListProductId;
 import it.refill.backend.models.product.Product;
 
 @Entity
 @Table(name="list_contains_products")
 public class ListContainsProducts {
     @EmbeddedId
-    private ProductListId id;
+    private ListProductId id;
 
     private Float quantity;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("listId")
-    private ProductList list;
+    private ListProduct list;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @MapsId("productId")
@@ -30,18 +30,18 @@ public class ListContainsProducts {
     public ListContainsProducts() {
     }
 
-    public ListContainsProducts(ProductListId id, Float quantity, ProductList list, Product product) {
+    public ListContainsProducts(ListProductId id, Float quantity, ListProduct list, Product product) {
         this.id = id;
         this.quantity = quantity;
         this.list = list;
         this.product = product;
     }
 
-    public ProductListId getId() {
+    public ListProductId getId() {
         return this.id;
     }
 
-    public void setId(ProductListId id) {
+    public void setId(ListProductId id) {
         this.id = id;
     }
 
@@ -53,11 +53,11 @@ public class ListContainsProducts {
         this.quantity = quantity;
     }
 
-    public ProductList getList() {
+    public ListProduct getList() {
         return this.list;
     }
 
-    public void setList(ProductList list) {
+    public void setList(ListProduct list) {
         this.list = list;
     }
 
@@ -69,7 +69,7 @@ public class ListContainsProducts {
         this.product = product;
     }
 
-    public ListContainsProducts id(ProductListId id) {
+    public ListContainsProducts id(ListProductId id) {
         this.id = id;
         return this;
     }
@@ -79,7 +79,7 @@ public class ListContainsProducts {
         return this;
     }
 
-    public ListContainsProducts list(ProductList list) {
+    public ListContainsProducts list(ListProduct list) {
         this.list = list;
         return this;
     }

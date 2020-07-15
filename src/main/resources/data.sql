@@ -13,6 +13,7 @@ INSERT INTO user_roles(user_id, role_id) VALUES (71, 1);
 INSERT INTO user_roles(user_id, role_id) VALUES (72, 1);
 
 INSERT INTO suppliers(supplier_id, name, supplier_iva, supplier_lat, supplier_long) VALUES (70,"Felicetti", "09382402934823", 23.23432, 23.12312);
+INSERT INTO suppliers(supplier_id, name, supplier_iva, supplier_lat, supplier_long) VALUES (71,"Barilla", "09382402934823", 23.23432, 23.12312);
 
 INSERT INTO customers(customer_id, first_name, last_name, image_link, telephone, created_at, prefix) VALUES (71, "Sebastian", "Cavada", null, "3703115683", null, "+39");
 INSERT INTO customers(customer_id, first_name, last_name, image_link, telephone, created_at, prefix) VALUES (72, "Luca", "Taddeo", null, "12312312", null, "+39");
@@ -21,11 +22,17 @@ INSERT INTO users(user_id, type, customer_id, supplier_id) VALUES (70, "supplier
 INSERT INTO users(user_id, type, customer_id, supplier_id) VALUES (71, "customer test", 71, NULL);
 INSERT INTO users(user_id, type, customer_id, supplier_id) VALUES (72, "customer test 2", 72, NULL);
 
+INSERT INTO list_products(id, is_cart, list_description, list_name, total_price, customer_id) VALUES (1,1,"the best cart", "cart", null, 71);
+
 INSERT INTO nationalities (nationality_name, nationality_short) VALUES ("Italy", "IT");
 
 INSERT INTO categories(category_name) VALUES ("frutta"),("verdura"),("pane"),("pasta"),("riso"),("cereali"),("frutta secca"),("condimenti"),("latte e yogurt"),("colazione"),("pesce"),("carne"),("formaggio"),("dolci"),("bevande");
 
-INSERT INTO products (type, product_name, product_description, img_link, price, supplier_id, show_product, category_id) VALUES ("piece", "caffe illy", "dolce caffe in molti gusti", "img_link", 3.24, 70,TRUE, 10);
+INSERT INTO products (type, product_name, product_description, img_link, price, supplier_id, show_product, category_id) VALUES ("piece", "caffe illy", "dolce caffe in molti gusti", "img_link", 3.24, 70, TRUE, 10);
+INSERT INTO products (type, product_name, product_description, img_link, price, supplier_id, show_product, category_id) VALUES ("piece", "mandarini", "bunissimi mandarini vegani", "img_link", 1.00, 70, TRUE, 2);
+INSERT INTO products (type, product_name, product_description, img_link, price, supplier_id, show_product, category_id) VALUES ("piece", "pasta", "pasta casalinga", "img_link", 0.99, 70, TRUE, 3);
+INSERT INTO products (type, product_name, product_description, img_link, price, supplier_id, show_product, category_id) VALUES ("piece", "cesto di patate", "tanti kili di bonta", "img_link", 12, 70, TRUE, 6);
+INSERT INTO products (type, product_name, product_description, img_link, price, supplier_id, show_product, category_id) VALUES ("piece", "marmellata di mirtilli", "tanti kili di bonta", "img_link", 12, 71, TRUE, 6);
 
 INSERT INTO ingredients(ingredient_name) VALUES ("caffe"), ("paprika"), ("cacao"), ("farina");
 
